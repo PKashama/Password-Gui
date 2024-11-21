@@ -30,7 +30,7 @@ root = Tk()
 root.title('Password Manager')
 root.minsize(width=450, height= 450)
 
-# Witte rui;te linkerkant
+# Witte ruimte linkerkant
 '''witte_ruimte = Label(root, width=20, text=(' '))
 witte_ruimte.grid(row= 0, column= 0)'''
 
