@@ -1,0 +1,69 @@
+from tkinter import *
+from tkinter import Canvas
+import random
+
+# ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+cijfers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+symbolen = ['!', '#', '$', '%', '&', '*', '?', '@']
+
+def password_generator():
+    wachtwoord = ''
+    password.delete(0, END)
+    for x in range(random.randint(2, 5)):
+        wachtwoord += random.choice(letters)
+
+    for x in range(random.randint(2, 5)):
+        wachtwoord += random.choice(cijfers)
+
+    for x in range(random.randint(2, 5)):
+        wachtwoord += random.choice(symbolen)
+
+    generated_password = ''.join(random.sample(wachtwoord, len(wachtwoord)))
+    password.insert(0, generated_password)
+
+# ---------------------------- UI SETUP ------------------------------- #
+
+# Tkinter setup
+root = Tk()
+root.title('Password Manager')
+root.minsize(width=450, height= 450)
+
+# Witte rui;te linkerkant
+'''witte_ruimte = Label(root, width=20, text=(' '))
+witte_ruimte.grid(row= 0, column= 0)'''
+
+# Afbeelding maken
+canvas = Canvas(root, width=200, height=200, bg='white')
+canvas.grid(row= 1, column= 1)
+logo = PhotoImage(file='logo.png')
+canvas.create_image((100, 100),image=logo)
+
+
+# Invoer voor website
+websitelabel = Label(root, text=('Website: '))
+websitelabel.grid(row= 4, column= 1)
+website = Entry(root, width=30)
+website.grid(row= 5, column= 1)
+
+# Invoer voor wachtwoord
+passwordlabel = Label(root, text=('Password: '))
+passwordlabel.grid(row= 6, column= 1)
+password = Entry(root, width=30)
+password.grid(row= 7, column= 1)
+
+# Invoer voor email
+emaillabel = Label(root, text=('Email: '))
+emaillabel.grid(row= 8, column= 1)
+email = Entry(root, width=30)
+email.grid(row= 9, column= 1)
+
+# Knoppen maken
+button_add = Button(root, width=20, height=3, text=('Add'))
+button_add.grid(row= 10, column= 1)
+button_pass = Button(root, width=20, text=('Generate password'), command=password_generator)
+button_pass.grid(row=7, column=2)
+
+
+root.mainloop()
