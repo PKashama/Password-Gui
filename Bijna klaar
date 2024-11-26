@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import Canvas
+from tkinter import messagebox
 import random
+import os
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -25,14 +28,43 @@ def password_generator():
 
 # ---------------------------- UI SETUP ------------------------------- #
 
+def message_error() :
+    website_get = website.get()
+    password_get = password.get()
+    email_get = email.get()
+
+    # Mssagebox
+    if '' in (website_get, password_get, email_get):
+        messagebox.showerror(title='BAD INPUT', message='PLEASE FILL ALL THE BOXES')
+    else:
+        Bevestiging = messagebox.askquestion(title='Confirmation', message=f'Email: {email_get}\nPassword: {password_get}\nWebsite: {website_get}\n\nAre you sure?')
+
+        # Opslaan van documenten
+        if Bevestiging == 'yes':
+            with open('Password Manager.txt', 'a') as file:
+                file.write(f' Email: {email_get} | Password: {password_get} | Website: {website_get}\n')
+            website.delete(0, END)
+            password.delete(0, END)
+            email.delete(0, END)
+
+
+# Folder en .txt documenten aanmaken
+if os.path.exists('Password Manager.txt'):
+    print('---- DOCUMENT BESTAAT AL ----')
+else:
+    print('---- DOCUMENT WORDT AANGEMAAKT ----')
+    with open('Password Manager.txt', 'w') as file:
+        file.write('')
+
+
 # Tkinter setup
 root = Tk()
 root.title('Password Manager')
 root.minsize(width=450, height= 450)
 
 # Witte ruimte linkerkant
-'''witte_ruimte = Label(root, width=20, text=(' '))
-witte_ruimte.grid(row= 0, column= 0)'''
+witte_ruimte = Label(root, width=20, text=(' '))
+witte_ruimte.grid(row= 0, column= 0)
 
 # Afbeelding maken
 canvas = Canvas(root, width=200, height=200, bg='white')
@@ -60,7 +92,7 @@ email = Entry(root, width=30)
 email.grid(row= 9, column= 1)
 
 # Knoppen maken
-button_add = Button(root, width=20, height=3, text=('Add'))
+button_add = Button(root, width=20, height=3, text=('Add'), command=message_error)
 button_add.grid(row= 10, column= 1)
 button_pass = Button(root, width=20, text=('Generate password'), command=password_generator)
 button_pass.grid(row=7, column=2)
